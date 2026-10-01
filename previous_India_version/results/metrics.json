@@ -1,0 +1,152 @@
+{
+  "source": "https://www.kaggle.com/datasets/nehalbirla/vehicle-dataset-from-cardekho",
+  "mirror": "https://github.com/HarshKapadia2/car-details/blob/main/data/car_details_v3.csv",
+  "audit": {
+    "raw_rows": 8128,
+    "raw_columns": 13,
+    "exact_duplicates": 1202,
+    "missing_by_column": {
+      "name": 0,
+      "year": 0,
+      "selling_price": 0,
+      "km_driven": 0,
+      "fuel": 0,
+      "seller_type": 0,
+      "transmission": 0,
+      "owner": 0,
+      "mileage": 221,
+      "engine": 221,
+      "max_power": 215,
+      "torque": 222,
+      "seats": 221
+    },
+    "year_range": [
+      1983,
+      2020
+    ],
+    "price_range_inr": [
+      29999,
+      10000000
+    ]
+  },
+  "clean_rows": 6926,
+  "split_rows": {
+    "train": 4848,
+    "validation": 1039,
+    "test": 1039
+  },
+  "feature_columns": [
+    "year",
+    "log_km",
+    "engine_cc",
+    "power_bhp",
+    "seats",
+    "brand",
+    "fuel",
+    "seller_type",
+    "transmission",
+    "owner"
+  ],
+  "eda": {
+    "price_median_inr": 400000.0,
+    "price_mean_inr": 523008.6297442244,
+    "year_price_spearman": 0.7115150120141333,
+    "km_price_spearman": -0.29607045123198505,
+    "fuel_median_inr": {
+      "CNG": 320000.0,
+      "Diesel": 509999.0,
+      "LPG": 188000.0,
+      "Petrol": 300000.0
+    }
+  },
+  "year_medians": {
+    "2000": 97500.0,
+    "2002": 75000.0,
+    "2003": 82500.0,
+    "2004": 90000.0,
+    "2005": 100000.0,
+    "2006": 145000.0,
+    "2007": 130000.0,
+    "2008": 175000.0,
+    "2009": 180000.0,
+    "2010": 220000.0,
+    "2011": 262000.0,
+    "2012": 300000.0,
+    "2013": 387000.0,
+    "2014": 450500.0,
+    "2015": 525000.0,
+    "2016": 550000.0,
+    "2017": 635000.0,
+    "2018": 680000.0,
+    "2019": 694500.0,
+    "2020": 589000.0
+  },
+  "tree_cv": {
+    "best_parameters": {
+      "model__max_depth": 10,
+      "model__min_samples_leaf": 3
+    },
+    "mean_mae_inr": 107233.0969058989,
+    "folds": 3
+  },
+  "validation": {
+    "Median baseline": {
+      "mae_inr": 258330.97690086623,
+      "rmse_inr": 422600.77489528945,
+      "r2": -0.06500963101474366
+    },
+    "Linear regression": {
+      "mae_inr": 133736.62670085288,
+      "rmse_inr": 251609.5447970303,
+      "r2": 0.6224737266003653
+    },
+    "KNN regression": {
+      "mae_inr": 90442.24451258821,
+      "rmse_inr": 158238.56688592877,
+      "r2": 0.8506801176457981
+    },
+    "Decision tree": {
+      "mae_inr": 93185.98980253207,
+      "rmse_inr": 167818.29710148627,
+      "r2": 0.8320532605411998
+    }
+  },
+  "selected_model": "KNN regression",
+  "test": {
+    "mae_inr": 98139.13153415865,
+    "rmse_inr": 205421.56705073925,
+    "r2": 0.8277770191554054
+  },
+  "baseline_test": {
+    "mae_inr": 263673.8488931665,
+    "rmse_inr": 505670.37853534386,
+    "r2": -0.04359996049577752
+  },
+  "success_criterion_met": true,
+  "error_by_price_band": [
+    {
+      "band": "highest quarter",
+      "size": 243,
+      "median": 115517.57654448412,
+      "mean": 203948.4207625718
+    },
+    {
+      "band": "lower middle",
+      "size": 263,
+      "median": 50504.531037751,
+      "mean": 68516.81915196637
+    },
+    {
+      "band": "lowest quarter",
+      "size": 257,
+      "median": 31119.241424145162,
+      "mean": 47671.95914089347
+    },
+    {
+      "band": "upper middle",
+      "size": 276,
+      "median": 62050.0,
+      "mean": 80200.99450184454
+    }
+  ]
+}
