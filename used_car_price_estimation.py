@@ -1,20 +1,8 @@
 # %% [markdown]
-# # Used car price estimation in Kazakhstan
-# **Team:** Alisher Akhmet and Aslan Muratov
-#
-# Regression target: advertised price of a used car in Kazakhstani tenge (KZT).
-# Main metric: mean absolute error (MAE) in KZT. Success criterion: the selected
-# model must reduce held-out test MAE by at least 20% against a training-median
-# baseline. RMSE and R2 are secondary metrics.
-#
-# Dataset: Darkhan Mutashev, Kolesa-Cars-2025, Kaggle (MIT licence),
-# https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025
-# Public dataset last updated 2025-12-18. The source rows link to Kolesa.kz
-# listings; the collection dates of individual rows are not provided.
-# Prices are asking prices, not verified sale prices. This is a 2025 snapshot,
-# so the result is not a live valuation of the 2026 market.
-#
-# Run from this folder: `python used_car_price_estimation.py`
+# # Used car prices (KZT)
+# Alisher Akhmet, Aslan Muratov
+# Kolesa snapshot, 2025.
+# MAE target: 20% below baseline.
 
 # %%
 from __future__ import annotations
@@ -49,11 +37,7 @@ SOURCE = "https://www.kaggle.com/datasets/mutashevdarkhan/kolesa-cars-2025"
 
 
 # %% [markdown]
-# ## 1. Data acquisition and audit
-# The CSV is the unmodified `cars_kolesa_parsed.csv` from the Kaggle download,
-# renamed for clarity. It has prices in KZT, listing URLs, model year, mileage,
-# engine size and categories. We verify the currency symbol and report the
-# source's missing fields before modelling.
+# ## 1. Data audit
 
 # %%
 raw = pd.read_csv(DATA)
@@ -86,17 +70,9 @@ print(json.dumps(audit, indent=2, ensure_ascii=False))
 
 
 # %% [markdown]
-# ## 2. Cleaning, features and split
-# Keep used listings only. An ad can appear more than once due to source search
-# pages; deduplicate by the actual Kolesa ad ID before splitting. Remove
-# listings explicitly marked "on order" because they are not local available
-# cars. Reject nonpositive prices, invalid years and negative mileage. Preserve
-# high-price observations so error analysis reflects the real price range.
-#
-# The source parser often missed engine size even when it occurs in the spec
-# text, so we recover it from `desc` when available. We also extract body type,
-# keep model text, and use log1p(km) to reduce mileage skew. No target-derived
-# feature, listing ID or raw price label is passed to any model.
+# ## 2. Cleaning and split
+# Deduplicate before splitting.
+# Engine size from descriptions.
 
 # %%
 used = raw.loc[raw.condition.eq("used")].copy()
@@ -147,11 +123,8 @@ assert not (set(X_val.index) & set(X_test.index))
 
 
 # %% [markdown]
-# ## 3. Four training-only EDA plots
-# Plot 1: price distribution. Plot 2: median price by model year. Plot 3:
-# mileage versus price. Plot 4: price by fuel type. All use training rows only
-# so the final test labels do not inform modelling decisions. The fuel chart
-# is descriptive; different car mixes can explain group differences.
+# ## 3. EDA plots
+# Training data only.
 
 # %%
 eda = used.loc[X_train.index].copy()
@@ -199,13 +172,9 @@ print("Fuel groups differ, but those differences are not causal estimates.")
 
 
 # %% [markdown]
-# ## 4. Baseline and three lecture algorithms
-# The numeric median imputer and scaler, plus categorical mode imputer and
-# one-hot encoder, are fitted within each training fold. Rare categories are
-# grouped by OneHotEncoder so a singleton trim cannot dominate the model.
-# We compare the training-median baseline, linear regression, KNN and a
-# decision tree. The tree is tuned by 3-fold CV on training rows. Validation
-# MAE selects the winner. The test set is evaluated only after selection.
+# ## 4. Model comparison
+# Preprocessing within each fold.
+# Select by validation MAE.
 
 # %%
 preprocess = ColumnTransformer(
@@ -260,12 +229,8 @@ print("MEETS SUCCESS CRITERION", success)
 
 
 # %% [markdown]
-# ## 5. Initial error analysis and limits
-# Price-band boundaries come from training labels only. We evaluate test
-# absolute errors within those bands. The dataset has no city, listing date,
-# verified transaction price or detailed condition measure. The published
-# dataset was last updated in December 2025 and should not be described as
-# live 2026 market data.
+# ## 5. Error analysis
+# Price bands from training.
 
 # %%
 cuts = np.quantile(y_train, [0.25, 0.5, 0.75])
@@ -314,8 +279,6 @@ report = {
 print("\nSaved Kazakhstan charts and metrics in", OUT)
 
 # %% [markdown]
-# ## 6. Final-stage plan
-# 1. Obtain a dated 2026 snapshot with permission and evaluate time drift.
-# 2. Add city and car condition if a licensed source provides them.
-# 3. Compare stronger ensembles using training-only cross-validation.
-# 4. Report segment errors and uncertainty, especially for expensive cars.
+# ## 6. Next steps
+# Fresh data, city, condition.
+# Try ensembles, check uncertainty.
