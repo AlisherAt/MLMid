@@ -19,8 +19,6 @@ Can we estimate the **advertised asking price** of a used car listed in Kazakhst
 - `used_car_price_estimation.py`: runnable Python notebook-style script (`# %%` cells), accepted by the assignment as a `.py` project notebook.
 - `kolesa_cars_2025.csv`: source data for offline reproducibility.
 - `results/`: four EDA plots, test prediction plot and `metrics.json` from the verified run.
-- `output/presentation/used_car_price_presentation_final.pptx`: 10-slide midterm defense presentation.
-- `DEFENSE_GUIDE.md`: timed speaking guide and answers to likely questions.
 - `requirements.txt`: Python package requirements.
 
 ## Setup and run
@@ -52,9 +50,9 @@ Validation MAE: training-median baseline **₸6.50m**; linear regression **₸4.
 
 On the held-out test set, KNN achieved **MAE ₸2,444,769**, **RMSE ₸5,891,766** and **R² 0.715**. The median baseline's test MAE was **₸5,950,858**. KNN reduced MAE by **58.9%**, meeting the stated midterm criterion. In the highest training-price quartile, mean absolute test error was **₸6.44m**, compared with **₸1.13m** in the lowest quartile. This is a material weakness for expensive cars.
 
-## Team contributions and defense
+## Team contributions
 
-The team confirmed this division: **Alisher Akhmet** handled dataset sourcing, auditing, cleaning and EDA; **Aslan Muratov** handled model training, cross-validation, metrics and error analysis. Alisher presents the data and preparation slides; Aslan presents evaluation and conclusions. Both students should be ready to explain the full workflow during the defense. `DEFENSE_GUIDE.md` allocates ten minutes across the slides.
+The team confirmed this division: **Alisher Akhmet** handled dataset sourcing, auditing, cleaning and EDA; **Aslan Muratov** handled model training, cross-validation, metrics and error analysis.
 
 ## Limitations and final-stage plan
 

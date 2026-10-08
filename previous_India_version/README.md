@@ -20,8 +20,6 @@ Can a model estimate the **advertised** price of a used car in India from its mo
 - `used_car_price_estimation.py`: the runnable course notebook in Python cell format (`# %%`). It loads data, audits and cleans it, makes four EDA plots, splits the data, trains a baseline and three lecture models, tunes a tree with cross-validation, evaluates the selected model once on the test set, and analyzes errors.
 - `car_details_v3.csv`: source dataset for reproducible offline runs.
 - `results/`: generated charts and `metrics.json` from the verified run.
-- `output/presentation/used_car_price_presentation_final.pptx`: 10-minute midterm defense deck.
-- `DEFENSE_GUIDE.md`: timed speaking script and likely defense questions.
 - `requirements.txt`: Python package requirements.
 
 ## Setup and run
@@ -60,16 +58,14 @@ The tree used three-fold CV on the training set to choose `max_depth=10` and `mi
 
 Error is larger on expensive listings. In the highest training-price quartile, mean absolute test error is INR 203,948, versus INR 47,672 in the lowest quartile. The model may have difficulty with rare high-end brands and trims, and the feature set omits region, condition and listing date. Random splits also do not measure performance on newer listings.
 
-## Team contribution record and defense
+## Team contributions
 
-The team confirmed the following division of technical work and speaking sections.
+The team confirmed the following division of technical work.
 
-| Student | Technical contribution | Defense section |
-| --- | --- | --- |
-| Alisher Akhmet | Dataset sourcing, data audit, cleaning choices and four EDA findings | Dataset, EDA and preparation |
-| Aslan Muratov | Model training, cross-validation, evaluation metrics and error analysis | Models, results and limitations |
-
-Both students should be ready to explain the full workflow during the defense.
+| Student | Technical contribution |
+| --- | --- |
+| Alisher Akhmet | Dataset sourcing, data audit, cleaning choices and four EDA findings |
+| Aslan Muratov | Model training, cross-validation, evaluation metrics and error analysis |
 
 ## Final-stage plan
 
@@ -77,4 +73,3 @@ Both students should be ready to explain the full workflow during the defense.
 2. Add listing date, region, condition and trim if an appropriate licensed dataset becomes available.
 3. Compare stronger models and tune them using training-only cross-validation.
 4. Evaluate errors by brand and price segment, estimate uncertainty, and use a later-time holdout if listing dates are available.
-
